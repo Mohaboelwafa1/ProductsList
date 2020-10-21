@@ -1,0 +1,132 @@
+//
+//  ProductsListViewController.swift
+//  Weather
+//
+//  Created by Mohammed hassan on 8/6/20.
+//  Copyright © 2020 Mohammed hassan. All rights reserved.
+//
+
+import UIKit
+
+class ProductsListViewController: UIViewController {
+
+    @IBOutlet weak var listOfProductsTable : UITableView!
+    @IBOutlet weak var backGroundImage: AsyncImageView!
+
+    private var viewModel: ProductsListViewModel!
+    private let refreshControl = UIRefreshControl()
+    private var cellsModel: [ProductCellModel] = [ProductCellModel]()
+
+    // NOTE : Track if there is memory leak. If this is called so it is ok.
+    deinit {
+        print("deinit \(self)")
+    }
+
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        viewModel = ProductsListViewModel(dbHandler: DBHandler())
+        // NOTE : Get notified when there is some changes in the view model and update the UI
+        viewModel.changeHandler = { [weak self] in
+            self?.listOfProductsTable.reloadData()
+        }
+
+        setupView()
+        refreshProductsData()
+    }
+
+
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        navigationController?.setNavigationBarHidden(true, animated: animated)
+        listOfProductsTable.backgroundColor = .clear
+        self.listOfProductsTable.isOpaque = false;
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        navigationController?.setNavigationBarHidden(false, animated: animated)
+    }
+
+    func setupView() {
+        listOfProductsTable.register(CustomProductCell.self, forCellReuseIdentifier: "CustomProductCell")
+        listOfProductsTable.register(UINib(nibName: "CustomProductCell",bundle: nil), forCellReuseIdentifier: "CustomProductCell")
+
+        listOfProductsTable.refreshControl = refreshControl
+        refreshControl.addTarget(self, action: #selector(refreshProductsData(_:)), for: .valueChanged)
+        refreshControl.tintColor = UIColor(red:0.25, green:0.72, blue:0.85, alpha:1.0)
+
+        self.backGroundImage.alpha = 0.05
+    }
+
+    func refreshProductsData() {
+        _ = viewModel.getProductsListOffline()
+        cellsModel = viewModel.prepareCellModel()
+        self.listOfProductsTable.isHidden = false
+        self.refreshControl.endRefreshing()
+    }
+
+//    @objc private func refreshProductsData(_ sender: Any) {
+//        self.viewModel.getCitiesList(completionHandler: {
+//            (result, statusCode, errorModel)in
+//            self.refreshControl.endRefreshing()
+//        })
+//    }
+
+
+    @objc private func refreshProductsData(_ sender: Any) {
+        if Reachability.isConnectedToNetwork() {
+            DispatchQueue.global(qos: .background).async {
+                self.viewModel.getProductsList(completionHandler: {
+                    (result, statusCode, errorModel)in
+                    if statusCode == 200 {
+                        self.refreshControl.endRefreshing()
+                    }
+                })
+            }
+        } else {
+            self.refreshControl.endRefreshing()
+            Utilities.shared.showConnectionError(
+                view: self,
+                title: R.string.localizable.connectionError(),
+                duration: 1.0,
+                message: R.string.localizable.makeSureOfConnection(),
+                image: R.image.cloudIcon()
+            )
+        }
+    }
+
+
+}
+
+extension ProductsListViewController : UITableViewDataSource {
+
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.cellsModel.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let cell : UITableViewCell = self.listOfProductsTable!.dequeueReusableCell(withIdentifier: "CustomCityCell")! as! CustomProductCell
+        (cell as! CustomProductCell).setModel(model: cellsModel[indexPath.row])
+        return cell
+    }
+
+    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
+        return 200
+    }
+
+}
+
+extension ProductsListViewController : UITableViewDelegate {
+
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//        let cityDetailsViewController = storyBoard.instantiateViewController(withIdentifier: "CityDetailsViewController") as! CityDetailsViewController
+//        cityDetailsViewController.cityName = self.cellsModel[indexPath.row].cityName
+//        self.navigationController?.pushViewController(cityDetailsViewController, animated: true)
+    }
+
+    func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.backgroundColor = .clear
+    }
+
+}

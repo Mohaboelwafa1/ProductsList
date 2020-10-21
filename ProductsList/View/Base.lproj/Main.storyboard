@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="15505" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="15510"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <scenes>
+        <!--Splash View Controller-->
+        <scene sceneID="IHb-fv-zrl">
+            <objects>
+                <viewController storyboardIdentifier="SplashViewController" id="Aq1-xW-IRq" customClass="SplashViewController" customModule="Weather" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="Z6v-Jy-gY4">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="splashBG" translatesAutoresizingMaskIntoConstraints="NO" id="hKz-mp-Spv">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="896.00000000000023"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="hKz-mp-Spv" firstAttribute="leading" secondItem="CQw-tS-7G5" secondAttribute="leading" id="BEq-PZ-lGb"/>
+                            <constraint firstItem="hKz-mp-Spv" firstAttribute="trailing" secondItem="CQw-tS-7G5" secondAttribute="trailing" id="T4p-rY-ncp"/>
+                            <constraint firstAttribute="bottom" secondItem="hKz-mp-Spv" secondAttribute="bottom" id="Tw5-Us-jcO"/>
+                            <constraint firstItem="hKz-mp-Spv" firstAttribute="top" secondItem="Z6v-Jy-gY4" secondAttribute="top" id="lPR-WD-RQG"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="CQw-tS-7G5"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="5l0-ug-H2c"/>
+                    <connections>
+                        <outlet property="launchScreenBGImage" destination="hKz-mp-Spv" id="iwU-Rf-bdB"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Zyh-sl-yna" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1816" y="54"/>
+        </scene>
+    </scenes>
+    <resources>
+        <image name="splashBG" width="564" height="1002"/>
+    </resources>
+</document>
