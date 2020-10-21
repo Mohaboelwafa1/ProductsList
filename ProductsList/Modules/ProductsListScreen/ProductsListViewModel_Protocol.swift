@@ -1,5 +1,5 @@
 //
-//  CitiesListViewModel_Protocol.swift
+//  ProductsListViewModel_Protocol.swift
 //  Weather
 //
 //  Created by Mohammed hassan on 9/10/20.
@@ -7,18 +7,18 @@
 //
 import RealmSwift
 
-protocol CitiesListViewModel_Protocol {
+protocol ProductsListViewModel_Protocol {
     typealias ChangeHandler = (() -> Void)
     var changeHandler: ChangeHandler? { get set }
-    var citiesResponseModel: [CitiesResponseModel] { get }
-    var cellsModel : [CityCellModel] { get set }
-    var citiesList : Results<CitiesDBModel>? { get set }
+    var productsResponseModel: ProductsResponseModel { get }
+    var cellsModel: [ProductCellModel] { get set }
+    var productsList: Results<ProductsDBModel>? { get set }
     var dbHandler: DBHandler { get }
 
-    func prepareCellModel() -> [CityCellModel]
-    func getCitiesListOffline() -> Results<CitiesDBModel>?
-    func getCitiesList(completionHandler: @escaping (
-        _ ResponseModel:Results<CitiesDBModel>?,
+    func prepareCellModel() -> [ProductCellModel]
+    func getProductsListOffline() -> Results<ProductsDBModel>?
+    func getProductsList(completionHandler: @escaping (
+        _ ResponseModel:Results<ProductsDBModel>?,
         _ statusCode : Int,
         _ error_Response_Model:Error_Response_Model
         ) -> Void)

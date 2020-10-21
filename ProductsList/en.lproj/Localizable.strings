@@ -5,3 +5,9 @@
   Created by Mohammed hassan on 10/21/20.
   Copyright © 2020 Mohammed hassan. All rights reserved.
 */
+"loading" = "Loading ...";
+"unkown" = "Unkown";
+"connection error" = "Connection error";
+"make sure of connection" = "Make sure of connection";
+"please wait" = "Please wait ...";
+"retry connect" = "Please make sure of connection. We are trying again";

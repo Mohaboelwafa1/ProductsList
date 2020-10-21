@@ -4,7 +4,7 @@
 //
 //  Created by Mohammed hassan on 8/6/20.
 //  Copyright © 2020 Mohammed hassan. All rights reserved.
-//
+// ProductsListViewController
 
 import UIKit
 
@@ -105,7 +105,7 @@ extension ProductsListViewController : UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell : UITableViewCell = self.listOfProductsTable!.dequeueReusableCell(withIdentifier: "CustomCityCell")! as! CustomProductCell
+        let cell : UITableViewCell = self.listOfProductsTable!.dequeueReusableCell(withIdentifier: "CustomProductCell")! as! CustomProductCell
         (cell as! CustomProductCell).setModel(model: cellsModel[indexPath.row])
         return cell
     }

@@ -7,3 +7,20 @@
 //
 
 import Foundation
+import UIKit
+
+class CustomLabel: UILabel {
+    var productTitle: String?
+
+    init(productTitle:String) {
+        self.productTitle = productTitle
+        super.init(frame: CGRect.zero)
+        self.text = productTitle
+        self.font = UIFont(name: "customFont", size: 60)
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+

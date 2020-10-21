@@ -21,7 +21,9 @@ class CustomProductCell : UITableViewCell {
         super.awakeFromNib()
 
         titleLabel = CustomLabel(productTitle: "")
-        titleLabel.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+        titleLabel.frame = CGRect(x: 0, y: 20, width: self.frame.width, height: 30)
+        titleLabel.textColor = UIColor.black
+        titleLabel.textAlignment = .center
         titleLabel.font = UIFont(name: "customFont", size: 30)
         self.addSubview(titleLabel)
     }

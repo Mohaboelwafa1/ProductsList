@@ -1,45 +1,159 @@
 //
-//  CitiesResponseModel.swift
+//  productsResponseModel.swift
 //  Weather
 //
 //  Created by Mohammed hassan on 8/6/20.
 //  Copyright © 2020 Mohammed hassan. All rights reserved.
 //
 import Foundation
-struct productsResponseModel: Codable {
 
-    let data : String?
-    let error : City?
-    let tempType : String?
-    let temp : Double?
+// MARK: - Welcome
+struct ProductsResponseModel: Codable {
+    let data: DataClass
+    let errors, meta: String
+
+    init(){
+        data = DataClass()
+        errors = "errors"
+        meta = "meta"
+    }
+}
+
+// MARK: - DataClass
+struct DataClass: Codable {
+    let products: [Product]
+    let message: String
+
+    init(){
+        products = [Product()]
+        message = "message"
+    }
+}
+
+// MARK: - Product
+struct Product: Codable {
+    let createdAt, updatedAt: String
+    let isFavorite: Bool
+    let id: Int
+    let nameEn, nameAr, descriptionEn, descriptionAr: String
+    let price: Double
+    let isActive, isQuantities: Bool
+    let categoryID, storeID, sellerID: Int
+    let shareableLink: String
+    let links: [Link]
+    let category: Category
 
     enum CodingKeys: String, CodingKey {
-        case date = "date"
-        case city = "city"
-        case tempType = "tempType"
-        case temp = "temp"
+        case createdAt, updatedAt
+        case isFavorite = "is_favorite"
+        case id
+        case nameEn = "name_en"
+        case nameAr = "name_ar"
+        case descriptionEn = "description_en"
+        case descriptionAr = "description_ar"
+        case price
+        case isActive = "is_active"
+        case isQuantities = "is_quantities"
+        case categoryID = "category_id"
+        case storeID = "store_id"
+        case sellerID = "seller_id"
+        case shareableLink = "shareable_link"
+        case links = "Links"
+        case category = "Category"
     }
 
     init(){
-        date = "date"
-        city = City()
-        tempType = "tempType"
-        temp = 0.0
+        createdAt = "createdAt"
+        updatedAt = "updatedAt"
+        isFavorite = false
+        id = 0
+        nameEn = "name_en"
+        nameAr = "name_ar"
+        descriptionEn = "description_en"
+        descriptionAr = "description_ar"
+        price = 0.0
+        isActive = false
+        isQuantities = false
+        categoryID = 0
+        storeID = 0
+        sellerID = 0
+        shareableLink = "shareable_link"
+        links =  [Link()]
+        category = Category()
     }
-
-    init(from decoder: Decoder) throws {
-        let values = try decoder.container(keyedBy: CodingKeys.self)
-        date = try values.decodeIfPresent(String.self, forKey: .date)
-        city = try values.decodeIfPresent(City.self, forKey: .city)
-        tempType = try values.decodeIfPresent(String.self, forKey: .tempType)
-        temp = try values.decodeIfPresent(Double.self, forKey: .temp)
-    }
-
-    func encode(with aCoder: NSCoder) {
-        aCoder.encode(date, forKey: "date")
-        aCoder.encode(city, forKey: "city")
-        aCoder.encode(tempType, forKey: "tempType")
-        aCoder.encode(temp, forKey: "temp")
-    }
-
 }
+
+// MARK: - Category
+struct Category: Codable {
+    let createdAt, updatedAt: String
+    let id: Int
+    let nameEn, nameAr: String
+    let isActive: Bool
+    let link: Link
+
+    enum CodingKeys: String, CodingKey {
+        case createdAt, updatedAt, id
+        case nameEn = "name_en"
+        case nameAr = "name_ar"
+        case isActive = "is_active"
+        case link = "Link"
+    }
+
+    init(){
+        createdAt = "createdAt"
+        updatedAt = "updatedAt"
+        id = 0
+        nameEn = "name_en"
+        nameAr = "name_ar"
+        isActive = false
+        link = Link()
+    }
+}
+
+// MARK: - Link
+struct Link: Codable {
+    let createdAt, updatedAt: String
+    let id: Int
+    let targetType: String
+    let targetID: Int
+    let link: String
+    let linkType: String
+    let isActive: Bool
+
+    enum CodingKeys: String, CodingKey {
+        case createdAt, updatedAt, id
+        case targetType = "target_type"
+        case targetID = "target_id"
+        case link
+        case linkType = "link_type"
+        case isActive = "is_active"
+    }
+
+    init(){
+        createdAt = "AtedAt"
+        updatedAt = "AtedAt"
+        id = 0
+        targetType = "TargetType"
+        targetID = 0
+        link = "link"
+        linkType = "LinkType"
+        isActive = false
+
+
+       }
+}
+
+//enum AtedAt: String, Codable {
+//    case the20200312165551 = "2020-03-12 16:55:51"
+//    case the20200312174234 = "2020-03-12 17:42:34"
+//    case the20200319135153 = "2020-03-19 13:51:53"
+//}
+//
+//enum LinkType: String, Codable {
+//    case image = "image"
+//}
+//
+//enum TargetType: String, Codable {
+//    case category = "category"
+//    case product = "product"
+//}

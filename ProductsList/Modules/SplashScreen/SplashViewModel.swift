@@ -15,19 +15,19 @@ class SplashViewModel: NSObject, SplashViewModel_Protocol {
         self.dbHandler = dbHandler
     }
 
-    internal func getCitiesList(completionHandler: @escaping (Results<CitiesDBModel>?, Int, Error_Response_Model) -> Void) {
-        APIManager().GetCitiesList(completionHandler: {
+    internal func getProductsList(completionHandler: @escaping (Results<ProductsDBModel>?, Int, Error_Response_Model) -> Void) {
+        APIManager().getProductsList(completionHandler: {
             (result, statusCode, errorModel) in
             
             if result == nil {completionHandler(nil, statusCode, errorModel ?? Error_Response_Model())}
 
-            self.dbHandler.saveToDB(data: result ?? [CitiesResponseModel()])
+            self.dbHandler.saveToDB(data: result ?? ProductsResponseModel())
 
             let realm = try! Realm()
-            let citiesList = realm.objects(CitiesDBModel.self)
+            let productsList = realm.objects(ProductsDBModel.self)
 
             self.changeHandler?()
-            completionHandler(citiesList, statusCode, errorModel ?? Error_Response_Model())
+            completionHandler(productsList, statusCode, errorModel ?? Error_Response_Model())
         })
     }
 

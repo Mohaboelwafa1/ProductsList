@@ -8,37 +8,23 @@
 import RealmSwift
 
 class DBHandler {
-    func saveToDB(data: [CitiesResponseModel]) {
+    func saveToDB(data: ProductsResponseModel) {
         let realm = try! Realm()
 
         try! realm.write {
             realm.deleteAll()
         }
 
-        for city in data {
-            let cityModel = CitiesDBModel()
-            cityModel.date = city.date
-            cityModel.cityName = city.city?.name
-            cityModel.cityPicture = city.city?.picture
-            cityModel.tempType = city.tempType
-            cityModel.temp = city.temp ?? 0
+        for product in data.data.products {
+            let productModel = ProductsDBModel()
+            productModel.productName = product.nameEn
+            productModel.productPicture = product.links.first?.link
+
             try! realm.write {
-                realm.add(cityModel)
+                realm.add(productModel)
             }
         }
     }
 
-    func readJSONFromFile(fileName: String) -> Data? {
-        var data: Data?
-        if let path = Bundle.main.path(forResource: fileName, ofType: "json") {
-            do {
-                let fileUrl = URL(fileURLWithPath: path)
-                data = try Data(contentsOf: fileUrl, options: .mappedIfSafe)
-                return data
-            } catch {
-            }
-        }
-        return data
-    }
 
 }

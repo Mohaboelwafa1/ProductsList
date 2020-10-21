@@ -11,8 +11,8 @@ protocol SplashViewModel_Protocol {
     typealias ChangeHandler = (() -> Void)
     var changeHandler: ChangeHandler? { get set }
     var dbHandler: DBHandler { get }
-    func getCitiesList(completionHandler: @escaping (
-        _ ResponseModel:Results<CitiesDBModel>?,
+    func getProductsList(completionHandler: @escaping (
+        _ ResponseModel:Results<ProductsDBModel>?,
         _ statusCode : Int,
         _ error_Response_Model:Error_Response_Model
         ) -> Void)

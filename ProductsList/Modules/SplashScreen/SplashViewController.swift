@@ -23,13 +23,13 @@ class SplashViewController: UIViewController {
         viewModel = SplashViewModel(dbHandler: DBHandler())
         // NOTE : Get notified when there is some changes in the view model and update the UI
         viewModel.changeHandler = { [weak self] in
-            self?.goToCitiesListScreen()
+            self?.goToProductsListScreen()
         }
 
         if Utilities.shared.isItFirstLaunch() {
-            fetchWeatherData()
+            fetchProductsData()
         } else {
-            goToCitiesListScreen()
+            goToProductsListScreen()
         }
     }
 
@@ -38,29 +38,23 @@ class SplashViewController: UIViewController {
         navigationController?.setNavigationBarHidden(true, animated: animated)
     }
 
-    func fetchWeatherData() {
-        self.viewModel.getCitiesList(completionHandler: {
-            (result, statusCode, errorModel)in
-            UserDefaults.standard.set(true, forKey: Keys.launchedBefore.rawValue)
-        })
-    }
-
-    func goToCitiesListScreen() {
+    func goToProductsListScreen() {
         // NOTE : Hide the loader
         self.dismiss(animated: false, completion: nil)
         let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-        let cityListViewController = storyBoard.instantiateViewController(withIdentifier: "CitiesListViewController") as! CitiesListViewController
-        self.navigationController?.pushViewController(cityListViewController, animated: true)
+        let productsListViewController = storyBoard.instantiateViewController(withIdentifier: "ProductsListViewController") as! ProductsListViewController
+        self.navigationController?.pushViewController(productsListViewController, animated: true)
     }
 
-/*
-    func fetchWeatherData() {
-        if Utilities.shared.isConnectedToNetwork() {
-            Utilities.shared.ShowIndicator(title: nil, message:  R.string.localizable.pleaseWait(), controller: self)
+
+    func fetchProductsData() {
+        if Reachability.isConnectedToNetwork() {
+            Utilities.shared.ShowIndicator(title: nil, message:  "pleaseWait", controller: self)
             DispatchQueue.global(qos: .background).async {
-                self.viewModel.getCitiesList(completionHandler: {
+                self.viewModel.getProductsList(completionHandler: {
                     (result, statusCode, errorModel)in
                     if statusCode == 200 {
+                        print("_____\(result!.count)")
                         UserDefaults.standard.set(true, forKey: Keys.launchedBefore.rawValue)
                     }
                 })
@@ -76,10 +70,10 @@ class SplashViewController: UIViewController {
             )
 
             DispatchQueue.main.asyncAfter(deadline: .now() + 3.0) {
-                self.fetchWeatherData()
+                self.fetchProductsData()
             }
         }
     }
-    */
+
 
 }

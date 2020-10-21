@@ -8,5 +8,5 @@
 
 internal struct BaseApi {
     // NOTE: THE REAL SERVER
-    static let mainPath = "https://test.net"
+    static let mainPath = "https://run.mocky.io/v3/27867999-8b3e-4c04-a761-42def62ea1e8"
 }

@@ -1,5 +1,5 @@
 //
-//  CitiesListViewModel.swift
+//  ProductsListViewModel.swift
 //  Weather
 //
 //  Created by Mohammed hassan on 8/7/20.
@@ -8,54 +8,48 @@
 
 import RealmSwift
 
-class CitiesListViewModel: CitiesListViewModel_Protocol {
+class ProductsListViewModel: ProductsListViewModel_Protocol {
 
     internal var changeHandler: ChangeHandler?
-    internal var citiesResponseModel: [CitiesResponseModel]
-    internal var cellsModel: [CityCellModel]
-    internal var citiesList: Results<CitiesDBModel>?
+    internal var productsResponseModel: ProductsResponseModel
+    internal var cellsModel: [ProductCellModel]
+    internal var productsList: Results<ProductsDBModel>?
     internal let dbHandler: DBHandler
 
     init(dbHandler: DBHandler) {
         self.dbHandler = dbHandler
-        citiesResponseModel = [CitiesResponseModel]()
-        cellsModel = [CityCellModel]()
-        citiesList = nil
+        productsResponseModel = ProductsResponseModel()
+        cellsModel = [ProductCellModel]()
+        productsList = nil
     }
 
-    internal func getCitiesListOffline() -> Results<CitiesDBModel>? {
+    internal func getProductsListOffline() -> Results<ProductsDBModel>? {
         let realm = try! Realm()
-        citiesList = realm.objects(CitiesDBModel.self).distinct(by: ["cityName"]).sorted(byKeyPath: "cityName", ascending: true)
-        return citiesList
+        productsList = realm.objects(ProductsDBModel.self)//.distinct(by: ["productName"]).sorted(byKeyPath: "productName", ascending: true)
+        return productsList
     }
 
-    internal func getCitiesList(completionHandler: @escaping (Results<CitiesDBModel>?, Int, Error_Response_Model) -> Void) {
-        APIManager().GetCitiesList(completionHandler: {
+    internal func getProductsList(completionHandler: @escaping (Results<ProductsDBModel>?, Int, Error_Response_Model) -> Void) {
+        APIManager().getProductsList(completionHandler: {
             (result, statusCode, errorModel) in
 
             if result == nil {completionHandler(nil, statusCode, errorModel ?? Error_Response_Model())}
-            self.dbHandler.saveToDB(data: result ?? [CitiesResponseModel()])
+            self.dbHandler.saveToDB(data: result ?? ProductsResponseModel())
             let realm = try! Realm()
-            let citiesList = realm.objects(CitiesDBModel.self).distinct(by: ["cityName"]).sorted(byKeyPath: "cityName", ascending: true)
+            let productsList = realm.objects(ProductsDBModel.self)//.distinct(by: ["productName"]).sorted(byKeyPath: "productName", ascending: true)
             self.cellsModel = self.prepareCellModel()
-            completionHandler(citiesList, statusCode, errorModel ?? Error_Response_Model())
+            completionHandler(productsList, statusCode, errorModel ?? Error_Response_Model())
         })
     }
 
-    internal func prepareCellModel() -> [CityCellModel] {
+    internal func prepareCellModel() -> [ProductCellModel] {
 
-        guard self.citiesList != nil else {return cellsModel}
+        guard self.productsList != nil else {return cellsModel}
 
-        for row in self.citiesList! {
-            var model : CityCellModel = CityCellModel()
-            let dateAndTime = (row.date)!
-            let temp = row.temp
-            let celsuistemp = TempConverter.convertTempreture(temp: temp, type: TempType.getTempType(tempType: (row.tempType)!))
-
-            model.cityName = row.cityName ?? R.string.localizable.loading()
-            model.currentTime = DateGetter.getDate(date: dateAndTime)
-            model.temp = "\(celsuistemp) °"
-            model.backGroundImage = row.cityPicture ?? ""
+        for row in self.productsList! {
+            var model : ProductCellModel = ProductCellModel()
+            model.productName = row.productName!
+            model.productImage = row.productPicture ?? ""
             cellsModel.append(model)
         }
         self.changeHandler?()

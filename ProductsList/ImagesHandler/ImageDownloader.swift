@@ -14,7 +14,7 @@ class ImageDownloader{
         imageview.kf.indicatorType = .activity
         imageview.kf.setImage(
             with: url,
-            placeholder: R.image.cityPlaceHolder(),
+            placeholder: R.image.productPlaceHolder(),
             options: [
                 .processor(processor),
                 .scaleFactor(UIScreen.main.scale),
