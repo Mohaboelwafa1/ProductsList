@@ -2,9 +2,8 @@
 //  ProductsListViewController.swift
 //  Weather
 //
-//  Created by Mohammed hassan on 8/6/20.
+//  Created by Mohammed hassan on 10/21/20.
 //  Copyright © 2020 Mohammed hassan. All rights reserved.
-// ProductsListViewController
 
 import UIKit
 
@@ -109,8 +108,6 @@ extension ProductsListViewController : UITableViewDataSource {
 extension ProductsListViewController : UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-
-
         let alert = UIAlertController(title: "Alert", message: "You tapped the cell", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
             print("You canceled")
