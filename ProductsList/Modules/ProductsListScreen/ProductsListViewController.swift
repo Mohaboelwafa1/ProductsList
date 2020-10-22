@@ -102,7 +102,6 @@ extension ProductsListViewController : UITableViewDataSource {
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }
-
 }
 
 extension ProductsListViewController : UITableViewDelegate {
@@ -110,7 +109,7 @@ extension ProductsListViewController : UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         let alert = UIAlertController(title: "Alert", message: "You tapped the cell", preferredStyle: .alert)
         alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
-            print("You canceled")
+
         }))
         self.present(alert, animated: true)
     }
