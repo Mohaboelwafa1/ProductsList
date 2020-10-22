@@ -5,7 +5,6 @@
 //  Created by Mohammed hassan on 8/7/20.
 //  Copyright © 2020 Mohammed hassan. All rights reserved.
 //
-
 import Foundation
 
 struct Error_Response_Model: Codable {
@@ -33,5 +32,4 @@ struct Error_Response_Model: Codable {
         aCoder.encode(code, forKey: "code")
         aCoder.encode(message, forKey: "message")
     }
-
 }

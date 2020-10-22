@@ -15,6 +15,7 @@ target 'ProductsList' do
   pod 'netfox'
   pod 'R.swift'
   pod 'Toast-Swift', '~> 5.0.1'
+  pod 'SnapKit', '~> 5.0.0'
 
 
   target 'ProductsListTests' do

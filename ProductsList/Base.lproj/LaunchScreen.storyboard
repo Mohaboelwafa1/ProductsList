@@ -30,6 +30,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="splashBG" width="564" height="1002"/>
+        <image name="splashBG" width="282" height="501"/>
     </resources>
 </document>

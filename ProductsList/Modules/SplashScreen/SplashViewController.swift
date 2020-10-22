@@ -49,12 +49,11 @@ class SplashViewController: UIViewController {
 
     func fetchProductsData() {
         if Reachability.isConnectedToNetwork() {
-            Utilities.shared.ShowIndicator(title: nil, message:  "pleaseWait", controller: self)
+            Utilities.shared.ShowIndicator(title: nil, message:  "Please wait", controller: self)
             DispatchQueue.global(qos: .background).async {
                 self.viewModel.getProductsList(completionHandler: {
                     (result, statusCode, errorModel)in
                     if statusCode == 200 {
-                        print("_____\(result!.count)")
                         UserDefaults.standard.set(true, forKey: Keys.launchedBefore.rawValue)
                     }
                 })
@@ -74,6 +73,4 @@ class SplashViewController: UIViewController {
             }
         }
     }
-
-
 }

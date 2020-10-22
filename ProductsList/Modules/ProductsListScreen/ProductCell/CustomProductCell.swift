@@ -8,6 +8,7 @@
 
 import UIKit
 import Kingfisher
+import SnapKit
 
 class CustomProductCell : UITableViewCell {
 
@@ -19,18 +20,21 @@ class CustomProductCell : UITableViewCell {
 
     override func awakeFromNib() {
         super.awakeFromNib()
-
         titleLabel = CustomLabel(productTitle: "")
-        titleLabel.frame = CGRect(x: 0, y: 20, width: self.frame.width, height: 30)
-        titleLabel.textColor = UIColor.black
-        titleLabel.textAlignment = .center
-        titleLabel.font = UIFont(name: "customFont", size: 30)
         self.addSubview(titleLabel)
+        titleLabel.textColor = UIColor.magenta
+        titleLabel.textAlignment = .center
+        titleLabel.font = UIFont(name: "Inconsolata-Regular", size: 30)
+        titleLabel.snp.makeConstraints { (make) -> Void in
+            make.width.lessThanOrEqualToSuperview()
+            make.height.equalTo(30)
+            make.centerX.equalToSuperview()
+            make.topMargin.equalTo(20)
+        }
     }
 
     func setModel(model : ProductCellModel)   {
         self.titleLabel.text = model.productName
         CellBackgroundImageSetter.setBackgroundImage(imageURL: model.productImage, cell: self)
     }
-
 }

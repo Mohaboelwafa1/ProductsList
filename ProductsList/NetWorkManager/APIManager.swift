@@ -29,6 +29,4 @@ class APIManager: NSObject, OperationalRepository {
             catch{}
         } )
     }
-
-
 }

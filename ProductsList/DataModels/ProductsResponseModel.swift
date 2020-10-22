@@ -142,18 +142,3 @@ struct Link: Codable {
 
        }
 }
-
-//enum AtedAt: String, Codable {
-//    case the20200312165551 = "2020-03-12 16:55:51"
-//    case the20200312174234 = "2020-03-12 17:42:34"
-//    case the20200319135153 = "2020-03-19 13:51:53"
-//}
-//
-//enum LinkType: String, Codable {
-//    case image = "image"
-//}
-//
-//enum TargetType: String, Codable {
-//    case category = "category"
-//    case product = "product"
-//}

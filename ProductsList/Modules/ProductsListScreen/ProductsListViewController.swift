@@ -65,14 +65,6 @@ class ProductsListViewController: UIViewController {
         self.refreshControl.endRefreshing()
     }
 
-//    @objc private func refreshProductsData(_ sender: Any) {
-//        self.viewModel.getCitiesList(completionHandler: {
-//            (result, statusCode, errorModel)in
-//            self.refreshControl.endRefreshing()
-//        })
-//    }
-
-
     @objc private func refreshProductsData(_ sender: Any) {
         if Reachability.isConnectedToNetwork() {
             DispatchQueue.global(qos: .background).async {
@@ -94,8 +86,6 @@ class ProductsListViewController: UIViewController {
             )
         }
     }
-
-
 }
 
 extension ProductsListViewController : UITableViewDataSource {
@@ -119,14 +109,20 @@ extension ProductsListViewController : UITableViewDataSource {
 extension ProductsListViewController : UITableViewDelegate {
 
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//        let cityDetailsViewController = storyBoard.instantiateViewController(withIdentifier: "CityDetailsViewController") as! CityDetailsViewController
-//        cityDetailsViewController.cityName = self.cellsModel[indexPath.row].cityName
-//        self.navigationController?.pushViewController(cityDetailsViewController, animated: true)
+
+
+        let alert = UIAlertController(title: "Alert", message: "You tapped the cell", preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "Cancel", style: .cancel, handler: { action in
+            print("You canceled")
+        }))
+        self.present(alert, animated: true)
     }
 
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
+        cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: 0)
+        UIView.animate(withDuration: 4, delay: 0.05 * Double(indexPath.row), usingSpringWithDamping: 0.4, initialSpringVelocity: 0.1, options: .curveEaseIn, animations: {
+            cell.transform = CGAffineTransform(translationX: cell.contentView.frame.width, y: cell.contentView.frame.height)
+        })
         cell.backgroundColor = .clear
     }
-
 }

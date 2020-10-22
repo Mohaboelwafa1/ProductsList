@@ -16,7 +16,6 @@ class CustomLabel: UILabel {
         self.productTitle = productTitle
         super.init(frame: CGRect.zero)
         self.text = productTitle
-        self.font = UIFont(name: "customFont", size: 60)
     }
 
     required init?(coder: NSCoder) {

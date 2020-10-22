@@ -40,4 +40,13 @@ class ProductsListUITests: XCTestCase {
             }
         }
     }
+
+    func testClickCell() {
+
+        let app = XCUIApplication()
+        app.activate()
+        app.tables["mainTable"].children(matching: .cell).element(boundBy: 0).tap()
+        app.alerts["Alert"].scrollViews.otherElements.buttons["Cancel"].tap()
+
+    }
 }

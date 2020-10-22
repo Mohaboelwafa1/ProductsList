@@ -26,5 +26,4 @@ struct ProductCellModel: Codable {
         productName = try values.decodeIfPresent(String.self, forKey: .productName)!
         productImage = try values.decodeIfPresent(String.self, forKey: .productImage)!
     }
-
 }

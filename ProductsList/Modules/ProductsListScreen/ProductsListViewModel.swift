@@ -25,7 +25,7 @@ class ProductsListViewModel: ProductsListViewModel_Protocol {
 
     internal func getProductsListOffline() -> Results<ProductsDBModel>? {
         let realm = try! Realm()
-        productsList = realm.objects(ProductsDBModel.self)//.distinct(by: ["productName"]).sorted(byKeyPath: "productName", ascending: true)
+        productsList = realm.objects(ProductsDBModel.self)
         return productsList
     }
 
@@ -36,7 +36,7 @@ class ProductsListViewModel: ProductsListViewModel_Protocol {
             if result == nil {completionHandler(nil, statusCode, errorModel ?? Error_Response_Model())}
             self.dbHandler.saveToDB(data: result ?? ProductsResponseModel())
             let realm = try! Realm()
-            let productsList = realm.objects(ProductsDBModel.self)//.distinct(by: ["productName"]).sorted(byKeyPath: "productName", ascending: true)
+            let productsList = realm.objects(ProductsDBModel.self)
             self.cellsModel = self.prepareCellModel()
             completionHandler(productsList, statusCode, errorModel ?? Error_Response_Model())
         })
@@ -55,5 +55,4 @@ class ProductsListViewModel: ProductsListViewModel_Protocol {
         self.changeHandler?()
         return cellsModel
     }
-
 }
